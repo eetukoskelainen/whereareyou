@@ -2,7 +2,7 @@
 
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, request, redirect, url_for, session, render_template
-from flask_cache import Cache
+from flask_caching import Cache
 from flask_compress import Compress
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from flask_sslify import SSLify
@@ -13,7 +13,8 @@ from requests_oauthlib import OAuth2Session
 import json
 import os
 
-COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'application/json', 'application/javascript']
+COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml',
+                      'application/json', 'application/javascript']
 COMPRESS_LEVEL = 6
 COMPRESS_MIN_SIZE = 500
 
@@ -21,7 +22,17 @@ load_dotenv(find_dotenv())
 COMPANY_EMAIL = "@futurice.com"
 
 app = Flask(__name__, static_url_path='', static_folder='static')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + '/database.db'
+
+#MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE', None)
+#MYSQL_USER = os.environ.get('MYSQL_USER', None)
+#MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', None)
+#MYSQL_ROOT_PASSWORD = os.environ.get('MYSQL_ROOT_PASSWORD', None)
+#MYSQL_HOST = "mysql"
+#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + MYSQL_USER + ':' + MYSQL_PASSWORD + '@' + MYSQL_HOST + ":3306/" + MYSQL_DATABASE
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + \
+    '/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 sslify = SSLify(app)
@@ -32,7 +43,8 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-User, Location, Detection, TrainingDetection, Measurement, Device = get_models(db)
+User, Location, Detection, TrainingDetection, Measurement, Device = get_models(
+    db)
 
 
 def get_name_from_email(email):
