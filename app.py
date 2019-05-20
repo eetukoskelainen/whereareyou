@@ -18,7 +18,7 @@ COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml',
 COMPRESS_LEVEL = 6
 COMPRESS_MIN_SIZE = 500
 
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 COMPANY_EMAIL = "@futurice.com"
 
 app = Flask(__name__, static_url_path='', static_folder='static')
@@ -28,8 +28,9 @@ app = Flask(__name__, static_url_path='', static_folder='static')
 #MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', None)
 #MYSQL_ROOT_PASSWORD = os.environ.get('MYSQL_ROOT_PASSWORD', None)
 #MYSQL_HOST = "mysql"
-#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + MYSQL_USER + ':' + MYSQL_PASSWORD + '@' + MYSQL_HOST + ":3306/" + MYSQL_DATABASE
-
+# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://' + MYSQL_USER + ':' + \
+#    MYSQL_PASSWORD + '@' + MYSQL_HOST + ":3306/" + MYSQL_DATABASE
+#app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + \
     '/database.db'
